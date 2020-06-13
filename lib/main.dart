@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import './contact_page.dart';
 
 void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   runApp(MyApp());
