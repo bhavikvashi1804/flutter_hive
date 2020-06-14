@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    Hive.box('contacts').compact();
     Hive.box('contacts').close();
     //or to close all box call Hive.close()
     super.dispose();
@@ -36,7 +37,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Hive Tutorial',
       home: FutureBuilder(
-        future: Hive.openBox('contacts'),
+        future: Hive.openBox('contacts',compactionStrategy: (entries, deletedEntries) {
+          return deletedEntries>20;
+        } ,),
         builder: (context, snapshot) {
           if(snapshot.connectionState==ConnectionState.done){
             if(snapshot.hasError){
