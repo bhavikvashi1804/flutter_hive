@@ -38,6 +38,18 @@ class ContactPage extends StatelessWidget {
             return ListTile(
               title: Text(oneContact.name),
               subtitle: Text(oneContact.age.toString()),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(icon: Icon(Icons.refresh), onPressed: (){
+                    contactsBox.putAt(index, Contact(
+                      '${oneContact.name}*',
+                      oneContact.age
+
+                    ));
+                  })
+                ],
+              ),
             );
           } 
         
