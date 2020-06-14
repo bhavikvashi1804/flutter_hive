@@ -11,7 +11,20 @@ void main()async{
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void dispose() {
+    Hive.box('contacts').close();
+    //or to close all box call Hive.close()
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     //after first time open you have  not to provide await to open box
