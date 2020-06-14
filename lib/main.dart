@@ -9,10 +9,6 @@ void main()async{
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   runApp(MyApp());
-
-  //first time you need to await and then next time you can use it no need to provide async
-  final contactsBox = await Hive.openBox('contacts');
-
 }
 
 class MyApp extends StatelessWidget {
@@ -25,9 +21,34 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Hive Tutorial',
       home: FutureBuilder(
-
-        builder: (context, snapshot) => ContactPage(),
-        
+        future: Hive.openBox('contacts'),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState==ConnectionState.done){
+            if(snapshot.hasError){
+              return Text(snapshot.error.toString());
+            }
+            else{
+              return ContactPage();
+            }
+          }
+          else{
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Hive Tutorial'),
+              ),
+              body: Center(
+                child:Text(
+                  'Loading...',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 40,
+                    fontStyle: FontStyle.italic
+                  ),
+                ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
