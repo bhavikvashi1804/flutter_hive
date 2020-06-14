@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:hive/hive.dart';
 import 'models/contact.dart';
 
 class NewContactForm extends StatefulWidget {
@@ -15,6 +15,18 @@ class _NewContactFormState extends State<NewContactForm> {
 
   void addContact(Contact contact) {
     print('Name: ${contact.name}, Age: ${contact.age}');
+    //There are two methods to insert the data
+    //1. Hive.box().put() key value
+    //2. Hive.box().add()
+
+    //1st method
+    //Hive.box().put() key and value pair
+    //Hive.box('contacts').put(1, contact);
+
+    //2nd method
+    //Hive automatically assign the key and it will start from 0 
+    Hive.box('contacts').add(contact);
+
   }
 
   @override
