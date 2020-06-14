@@ -2,9 +2,10 @@ import 'package:hive/hive.dart';
 
 part 'contact.g.dart';
 
-@HiveType()
+@HiveType(typeId: 1)
 class Contact {
 
+  static const int typeId = 1;
   @HiveField(0)
   final String name;
   @HiveField(1)
