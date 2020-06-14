@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import './new_contact_form.dart';
+import './models/contact.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({
@@ -22,13 +24,19 @@ class ContactPage extends StatelessWidget {
   }
 
   ListView _buildListView() {
-    return ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text('Name'),
-          subtitle: Text('Age'),
-        )
-      ],
+
+    final contactsBox=Hive.box('contacts'); 
+    
+    return ListView.builder(
+      itemCount: contactsBox.length,
+      itemBuilder: (context, index) {
+        final Contact oneContact=contactsBox.getAt(index) as Contact;
+        return ListTile(
+          title: Text(oneContact.name),
+          subtitle: Text(oneContact.age.toString()),
+        );
+      } 
+     
     );
   }
 }
