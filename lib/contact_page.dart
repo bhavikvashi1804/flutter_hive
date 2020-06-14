@@ -47,6 +47,9 @@ class ContactPage extends StatelessWidget {
                       oneContact.age
 
                     ));
+                  }),
+                  IconButton(icon: Icon(Icons.delete), onPressed: (){
+                    contactsBox.deleteAt(index);
                   })
                 ],
               ),
